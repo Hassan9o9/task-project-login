@@ -1,11 +1,12 @@
 <?php
+error_reporting(0);
 
 @include 'config.php';
 
 session_start();
 
-if(!isset($_SESSION['admin_name'])){
-   header('location:login_form.php');
+if (!isset($_SESSION['admin_name'])) {
+    header('location:login_form.php');
 }
 
 ?>
@@ -23,7 +24,7 @@ if(!isset($_SESSION['admin_name'])){
 
 </head>
 <body>
-   
+
 <div class="container">
 
    <div class="content">

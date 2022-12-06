@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(0);
 @include 'config.php';
 
 if (isset($_POST['submit'])) {
@@ -8,11 +8,22 @@ if (isset($_POST['submit'])) {
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $pass = md5($_POST['password']);
     $cpass = md5($_POST['cpassword']);
+    $filename = $_FILES["submitfile"]["name"];
+    $tempname = $_FILES["submitfile"]["tmp_name"];
+    $folder = "./image/" . $filename;
+
+    $db = mysqli_connect("localhost", "root", "", "user_db");
+
+    $sql = "INSERT INTO image (filename) VALUES ('$filename')";
+    mysqli_query($db, $sql);
+
+    if (move_uploaded_file($tempname, $folder)) {
+        echo "<h3>  Image uploaded successfully!</h3>";
+    } else {
+        echo "<h3>  Failed to upload image!</h3>";
+    }
+
     $user_type = $_POST['user_type'];
-    // $image = $_FILES['image']['size'];
-    // $image_size = $_FILES['image']['size'];
-    // $image_tmp_name = $_FILES['image']['tmp_name'];
-    // $image_folder = 'upload_img/' . $image;
 
     $select = " SELECT * FROM user_form WHERE email = '$email' && password = '$pass' ";
 
@@ -67,15 +78,9 @@ if (isset($error)) {
 ?>
       <input type="text" name="name" required placeholder="enter your name">
       <input type="email" name="email" required placeholder="enter your email">
-      <input type="password" name="password" required placeholder="enter your password">
-      <input type="password" name="cpassword" required placeholder="confirm your password">
-      <input type="file" name="image" class="box" accept="image/jpg, image/jpeg, image/png">
-       <!-- <div class="profile-img">
-                <div class="file-upload">
-                    <input type="file" id="image-preview" name="image" required oninvalid="this.setCustomValidity('Select an image')" oninput="this.setCustomValidity('')">
-                    <i class="fas fa-user-edit"></i>
-                </div>
-            </div> -->
+      <input type="password" name="password" required placeholder="enter your password" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$">
+      <input type="password" name="cpassword" required placeholder="confirm your password"  pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$">
+      <input type="file" id="image-preview" name="image" required oninvalid="this.setCustomValidity('Select an image')" oninput="this.setCustomValidity('')">
       <select name="user_type">
          <option value="user">user</option>
          <option value="admin">admin</option>

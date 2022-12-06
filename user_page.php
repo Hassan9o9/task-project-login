@@ -1,11 +1,12 @@
 <?php
+error_reporting(0);
 
 @include 'config.php';
 
 session_start();
 
-if(!isset($_SESSION['user_name'])){
-   header('location:login_form.php');
+if (!isset($_SESSION['user_name'])) {
+    header('location:login_form.php');
 }
 
 ?>
@@ -23,7 +24,50 @@ if(!isset($_SESSION['user_name'])){
 
 </head>
 <body>
-   
+
+<div class="hero">
+   <nav>
+      <img src="images/logo.png" class="logo">
+      <ul>
+         <li><a href="#">Home</a></li>
+         <li><a href="#">Features</a></li>
+         <li><a href="#">About</a></li>
+         <li><a href="#">Contact</a></li>
+      </ul>
+      <img src="images/user.png" class="user-pic" onclick="toggleMenu()">
+
+      <div class="sub-menu-wrap" id="subMenu">
+         <div class="sub-menu">
+            <div class="user-info">
+               <img src="images/user.png">
+               <h2>Hassan Ali</h2>
+            </div>
+            <hr>
+
+            <a href="#" class="sub-menu-link">
+               <img src="images/profile.png" >
+               <p>Edit profile</p>
+               <span></span>
+            </a>
+            <a href="#" class="sub-menu-link">
+               <img src="images/setting.png" >
+               <p>Settings & Privacy</p>
+               <span></span>
+            </a>
+            <a href="#" class="sub-menu-link">
+               <img src="images/help.png" >
+               <p>Help & Support</p>
+               <span></span>
+            </a>
+            <a href="#" class="sub-menu-link">
+               <img src="images/logout.png" >
+               <p>Logout</p>
+               <span></span>
+            </a>
+         </div>
+      </div>
+   </nav>
+</div>
 <div class="container">
 
    <div class="content">
@@ -36,6 +80,14 @@ if(!isset($_SESSION['user_name'])){
    </div>
 
 </div>
+
+<script>
+      let subMenu = document.getElementById("subMenu");
+
+      function toggleMenu(){
+         subMenu.classList.toggle("open-menu");
+      }
+</script>
 
 </body>
 </html>
